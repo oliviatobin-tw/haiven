@@ -19,7 +19,7 @@ import {
 } from "./_local_store";
 import DownloadPrompt from "./_download_prompt";
 import LLMTokenUsage from "./_llm_token_usage";
-import { formattedUsage } from "../app/utils/tokenUtils";
+import { formattedUsage } from "../app/utils/_token_utils";
 import { aggregateTokenUsage } from "./utils/_aggregate_token_usage";
 import { filterSSEEvents } from "./utils/_sse_event_filter";
 

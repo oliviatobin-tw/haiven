@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Button } from "antd";
 import { RiPushpinLine } from "react-icons/ri";
 import Pinboard from "./pinboard";
-import { FEATURES } from "../app/feature_toggle";
+import { FEATURES } from "../app/_feature_toggle";
 
 export default function Header({ featureToggleConfig }) {
   const [isPinboardVisible, setIsPinboardVisible] = useState(false);

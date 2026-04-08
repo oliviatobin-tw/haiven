@@ -2,7 +2,7 @@
 import { RiDownload2Line } from "react-icons/ri";
 import { Dropdown, message } from "antd";
 import JSZip from "jszip";
-import { generateReadmeContent, getFileName } from "./utils/rulesDownloadUtils";
+import { generateReadmeContent, getFileName } from "./utils/_rules_download_utils";
 
 const DownloadRules = ({ rules }) => {
   const handleRuleDownload = async (ruleId = null, ide = null) => {

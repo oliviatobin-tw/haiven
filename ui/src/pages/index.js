@@ -16,7 +16,7 @@ import { RiBookShelfLine } from "react-icons/ri";
 import { MdLightbulb } from "react-icons/md";
 import ReactMarkdown from "react-markdown";
 import { initializeLocalStorage } from "../app/_local_store";
-import { FEATURES, getFeatureTogglesAsJson } from "../app/feature_toggle";
+import { FEATURES, getFeatureTogglesAsJson } from "../app/_feature_toggle";
 
 export default function ChatDashboard() {
   const [prompts, setPrompts] = useState([]);

@@ -4,7 +4,7 @@ import { vi } from "vitest";
 import LLMTokenUsage from "../app/_llm_token_usage";
 
 // Mock the formatTokens utility
-vi.mock("../app/utils/tokenUtils", () => ({
+vi.mock("../app/utils/_token_utils", () => ({
   formatTokens: vi.fn((num) => {
     if (typeof num !== "number" || isNaN(num)) return "-";
     if (num < 1500) return "1k";

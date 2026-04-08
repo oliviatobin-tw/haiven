@@ -8,7 +8,7 @@ vi.mock("../app/_local_store", () => ({
   initializeLocalStorage: vi.fn(),
 }));
 
-vi.mock("../app/feature_toggle", () => ({
+vi.mock("../app/_feature_toggle", () => ({
   FEATURES: {
     THOUGHTWORKS: "THOUGHTWORKS",
   },
@@ -41,7 +41,7 @@ import {
   staticFeaturesForDashboard,
   initialiseMenuCategoriesForSidebar,
 } from "../app/_navigation_items";
-import { getFeatureTogglesAsJson } from "../app/feature_toggle";
+import { getFeatureTogglesAsJson } from "../app/_feature_toggle";
 
 describe("ChatDashboard Component", () => {
   const mockPrompts = [

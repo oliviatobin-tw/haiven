@@ -1,6 +1,6 @@
 // © 2024 Thoughtworks, Inc. | Licensed under the Apache License, Version 2.0  | See LICENSE.md file for permissions.
 import { describe, it, expect, vi } from "vitest";
-import { getFeatureTogglesAsJson } from "../app/feature_toggle";
+import { getFeatureTogglesAsJson } from "../app/_feature_toggle";
 
 const localStorageMock = (() => {
   let store = {};

@@ -32,7 +32,7 @@ import {
   revokeApiKey,
   getApiKeyUsage,
 } from "../app/_boba_api";
-import { FEATURES } from "../app/feature_toggle";
+import { FEATURES } from "../app/_feature_toggle";
 
 const { Title, Text, Paragraph } = Typography;
 

@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Tooltip } from "antd";
 import { GiToken } from "react-icons/gi";
-import { formatTokens } from "./utils/tokenUtils";
+import { formatTokens } from "./utils/_token_utils";
 
 const LLMTokenUsage = ({ tokenUsage }) => {
   const [showTooltip, setShowTooltip] = useState(false);

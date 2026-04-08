@@ -4,7 +4,7 @@ import { ProChatProvider } from "@ant-design/pro-chat";
 import ChatWidget from "../app/_chat";
 import VerticalPossibilityPanel from "./_vertical-possibility-panel";
 import LLMTokenUsage from "../app/_llm_token_usage";
-import { formattedUsage } from "../app/utils/tokenUtils";
+import { formattedUsage } from "../app/utils/_token_utils";
 import { aggregateTokenUsage } from "../app/utils/_aggregate_token_usage";
 import { filterSSEEvents } from "../app/utils/_sse_event_filter";
 

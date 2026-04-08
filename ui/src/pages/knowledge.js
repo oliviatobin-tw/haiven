@@ -5,7 +5,7 @@ import { Collapse } from "antd";
 import MarkdownRenderer from "../app/_markdown_renderer";
 import DownloadAllPrompts from "../app/_download_all_prompts";
 import DownloadRules from "../app/_download_rules";
-import { FEATURES } from "../app/feature_toggle";
+import { FEATURES } from "../app/_feature_toggle";
 
 const KnowledgePackPage = ({
   contexts,

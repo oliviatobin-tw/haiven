@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { RiDownload2Line } from "react-icons/ri";
 import { Dropdown } from "antd";
 import JSZip from "jszip";
-import { fetchAllPromptsContents } from "./utils/promptDownloadUtils";
+import { fetchAllPromptsContents } from "./utils/_prompt_download_utils";
 
 const DownloadAllPrompts = ({ prompts }) => {
   const handleMultiplePromptsDownload = async (category = "") => {

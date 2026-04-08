@@ -5,7 +5,7 @@ import {
   fetchPromptContent,
   fetchAllPromptsContents,
   getFileName,
-} from "../../app/utils/promptDownloadUtils";
+} from "../../app/utils/_prompt_download_utils";
 
 describe("promptDownloadUtils", () => {
   describe("framePromptContent", () => {
