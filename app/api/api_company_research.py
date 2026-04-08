@@ -1,8 +1,16 @@
 # © 2024 Thoughtworks, Inc. | Licensed under the Apache License, Version 2.0  | See LICENSE.md file for permissions.
-from fastapi import Request
+from fastapi import FastAPI, Request
+from pydantic import BaseModel
 from api.api_basics import HaivenBaseApi
+from llms.chats import ChatManager
 from llms.model_config import ModelConfig
 from logger import HaivenLogger
+from prompts.prompts import PromptList
+
+
+class CompanyResearchRequest(BaseModel):
+    userinput: str
+    config: str = "company"
 
 CONFIG_TO_PROMPT_MAPPING = {
     "company": "company-overview",
@@ -11,18 +19,23 @@ CONFIG_TO_PROMPT_MAPPING = {
 
 
 class ApiCompanyResearch(HaivenBaseApi):
-    def __init__(self, app, chat_session_memory, model_key, prompt_list):
+    def __init__(
+        self,
+        app: FastAPI,
+        chat_session_memory: ChatManager,
+        model_key: ModelConfig,
+        prompt_list: PromptList,
+    ):
         super().__init__(app, chat_session_memory, model_key, prompt_list)
 
         @app.post("/api/research")
-        async def company_research(request: Request):
+        async def company_research(request: Request, body: CompanyResearchRequest):
             user_id = self.get_hashed_user_id(request)
             origin_url = request.headers.get("referer")
             chat_category = "company-research"
 
-            body = await request.json()
-            user_input = body.get("userinput", "")
-            config = body.get("config", "company")
+            user_input = body.userinput
+            config = body.config
             prompt_id = CONFIG_TO_PROMPT_MAPPING.get(config, "company-overview")
 
             HaivenLogger.get().analytics(

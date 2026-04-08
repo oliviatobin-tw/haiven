@@ -1,9 +1,12 @@
 # © 2024 Thoughtworks, Inc. | Licensed under the Apache License, Version 2.0  | See LICENSE.md file for permissions.
 from typing import List
-from fastapi import HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request
 from pydantic import BaseModel
 from api.api_basics import HaivenBaseApi, PromptRequestBody
+from llms.chats import ChatManager
+from llms.model_config import ModelConfig
 from logger import HaivenLogger
+from prompts.prompts import PromptList
 
 
 class TitleContent(BaseModel):
@@ -36,7 +39,69 @@ class ApiMultiStep(HaivenBaseApi):
             for pair in promptinput.scenarios
         ]
 
-    def __init__(self, app, chat_session_memory, model_key, prompt_list):
+    def _build_follow_up_user_input(
+        self, prompt_data: FollowUpRequest, output_framing: str
+    ) -> str:
+        # SECURITY: user input interpolated here — validate/sanitize upstream
+        return f"""
+                        {prompt_data.userinput}
+
+                        {output_framing}
+                        {self._concat_scenarios(prompt_data)}
+                    """
+
+    def _build_explore_user_input(
+        self, prompt_data: ExploreRequest, title: str, output_framing: str
+    ) -> str:
+        if prompt_data.previous_promptid:
+            # SECURITY: user input interpolated here — validate/sanitize upstream
+            return f"""
+## Specific task we're working on
+
+{title}
+
+{prompt_data.first_step_input}
+
+## What I have so far
+{output_framing}
+
+I want to focus on this item:
+
+{prompt_data.item}
+
+## My follow-up question
+
+{prompt_data.userinput}
+                    """
+        elif (
+            prompt_data.previous_framing is not None
+            and prompt_data.previous_framing != ""
+        ):
+            # For our custom-built pages that don't work with "previous prompt"
+            # SECURITY: user input interpolated here — validate/sanitize upstream
+            return f"""
+## What we're working on
+{prompt_data.previous_framing}
+
+## Context
+{prompt_data.first_step_input}
+
+## What I have so far
+I want to focus on this item:
+{prompt_data.item}
+
+## My follow-up question
+{prompt_data.userinput}
+                    """
+        return prompt_data.userinput
+
+    def __init__(
+        self,
+        app: FastAPI,
+        chat_session_memory: ChatManager,
+        model_key: ModelConfig,
+        prompt_list: PromptList,
+    ):
         super().__init__(app, chat_session_memory, model_key, prompt_list)
 
         # - Input for frontend: a list of promptIds - first step, multiple prompt options for next step?
@@ -58,13 +123,9 @@ class ApiMultiStep(HaivenBaseApi):
                     output_framing = prompts.get(
                         prompt_data.previous_promptid
                     ).metadata.get("output_framing", "")
-
-                    user_input = f"""
-                        {prompt_data.userinput}
-                        
-                        {output_framing}
-                        {self._concat_scenarios(prompt_data)}
-                    """
+                    user_input = self._build_follow_up_user_input(
+                        prompt_data, output_framing
+                    )
 
                 rendered_prompt, _ = prompts.render_prompt(
                     prompt_choice=prompt_data.promptid,
@@ -96,46 +157,15 @@ class ApiMultiStep(HaivenBaseApi):
                 stream_fn = self.stream_text_chat
                 prompts = self.prompt_list
 
-                user_input = prompt_data.userinput
+                title = ""
+                output_framing = ""
                 if prompt_data.previous_promptid:
-                    user_input = f"""
-
-## Specific task we're working on
-
-{prompts.get(prompt_data.previous_promptid).metadata["title"]}
-
-{prompt_data.first_step_input}
-
-## What I have so far
-{prompts.get(prompt_data.previous_promptid).metadata.get("output_framing", "")}
-
-I want to focus on this item:
-
-{prompt_data.item}
-
-## My follow-up question
-
-{prompt_data.userinput}
-                    """
-                elif (
-                    prompt_data.previous_framing is not None
-                    and prompt_data.previous_framing != ""
-                ):
-                    # For our custom-built pages that don't work with "previous prompt"
-                    user_input = f"""
-## What we're working on
-{prompt_data.previous_framing}
-
-## Context
-{prompt_data.first_step_input}
-
-## What I have so far
-I want to focus on this item:
-{prompt_data.item}
-
-## My follow-up question
-{prompt_data.userinput}
-                    """
+                    prev = prompts.get(prompt_data.previous_promptid)
+                    title = prev.metadata["title"]
+                    output_framing = prev.metadata.get("output_framing", "")
+                user_input = self._build_explore_user_input(
+                    prompt_data, title, output_framing
+                )
 
                 return stream_fn(
                     prompt=user_input,
