@@ -6,6 +6,8 @@ from unittest.mock import MagicMock, patch, ANY
 from fastapi.testclient import TestClient
 from fastapi import FastAPI
 from api.api_basics import ApiBasics
+from api.api_company_research import ApiCompanyResearch
+from api.api_features import ApiFeatures
 from api.api_multi_step import ApiMultiStep
 from api.api_scenarios import ApiScenarios
 from api.api_creative_matrix import ApiCreativeMatrix
@@ -1475,3 +1477,78 @@ class TestApi(unittest.TestCase):
         # Assert: Should return 401 with improved error message
         assert response.status_code == 401
         assert "User not authenticated" in response.json().get("detail", "")
+
+    @patch("llms.chats.JSONChat")
+    @patch("llms.chats.ChatManager")
+    @patch("prompts.prompts.PromptList")
+    def test_company_research_returns_streaming_response(
+        self,
+        mock_prompt_list,
+        mock_chat_manager,
+        mock_json_chat,
+    ):
+        mock_json_chat.run.return_value = iter(
+            [
+                '{"overview": "Test company overview"}',
+                {
+                    "usage": {
+                        "prompt_tokens": 100,
+                        "completion_tokens": 200,
+                        "total_tokens": 300,
+                    }
+                },
+            ]
+        )
+        mock_chat_manager.json_chat.return_value = ("some_key", mock_json_chat)
+        mock_prompt_list.render_prompt.return_value = "some prompt", None
+
+        ApiCompanyResearch(self.app, mock_chat_manager, MagicMock(), mock_prompt_list)
+
+        response = self.client.post(
+            "/api/research",
+            json={"userinput": "test company", "config": "company"},
+        )
+
+        assert response.status_code == 200
+        streamed_content = response.content.decode("utf-8")
+        assert "overview" in streamed_content
+
+    @patch("llms.chats.JSONChat")
+    @patch("llms.chats.ChatManager")
+    @patch("prompts.prompts.PromptList")
+    def test_company_research_uses_ai_tool_config(
+        self,
+        mock_prompt_list,
+        mock_chat_manager,
+        mock_json_chat,
+    ):
+        mock_json_chat.run.return_value = iter(["some response"])
+        mock_chat_manager.json_chat.return_value = ("some_key", mock_json_chat)
+        mock_prompt_list.render_prompt.return_value = "some prompt", None
+
+        ApiCompanyResearch(self.app, mock_chat_manager, MagicMock(), mock_prompt_list)
+
+        response = self.client.post(
+            "/api/research",
+            json={"userinput": "test ai tool", "config": "ai-tool"},
+        )
+
+        assert response.status_code == 200
+        mock_prompt_list.render_prompt.assert_called_with(
+            prompt_choice="company-overview-ai-tool",
+            user_input="test ai tool",
+        )
+
+    def test_get_features_returns_feature_list(self):
+        ApiFeatures(self.app)
+
+        response = self.client.get("/api/features")
+
+        assert response.status_code == 200
+        data = response.json()
+        assert "THOUGHTWORKS" in data
+        assert "API_KEY_AUTH" in data
+        assert "API_KEY_AUTH_UI" in data
+        assert isinstance(data["THOUGHTWORKS"], bool)
+        assert isinstance(data["API_KEY_AUTH"], bool)
+        assert isinstance(data["API_KEY_AUTH_UI"], bool)
