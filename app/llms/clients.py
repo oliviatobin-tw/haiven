@@ -111,10 +111,7 @@ class ChatClient:
 
     def stream(self, messages: List[HaivenMessage], mock: bool = False):
         json_messages = [message.to_json() for message in messages]
-        if os.environ.get("MOCK_AI", False):
-            completion_fn = MockModelClient().completion
-        else:
-            completion_fn = llmCompletion
+        completion_fn = MockModelClient().completion if os.environ.get("MOCK_AI", False) else llmCompletion
 
         citations = None
         usage_data = None
@@ -125,57 +122,52 @@ class ChatClient:
             stream_options={"include_usage": True},
             **self._get_kwargs(),
         ):
-            # Handle different response types safely
             try:
-                if isinstance(result, dict):
-                    citations = citations or result.get("citations", None)
-                    if self._is_token_usage_result(result):
-                        usage_data = result.get("usage")
-                else:
-                    # Handle object-like responses
-                    if hasattr(result, "usage") and getattr(result, "usage", None):
-                        usage_data = getattr(result, "usage")
-                    if hasattr(result, "get"):
-                        citations = citations or getattr(result, "get")(
-                            "citations", None
-                        )
-
-                # Extract content from streaming response
-                if hasattr(result, "choices") and getattr(result, "choices", None):
-                    choices = getattr(result, "choices")
-                    if choices and len(choices) > 0 and hasattr(choices[0], "delta"):
-                        delta = getattr(choices[0], "delta")
-                        if (
-                            hasattr(delta, "content")
-                            and getattr(delta, "content") is not None
-                        ):
-                            yield {"content": getattr(delta, "content")}
+                citations = citations or self._extract_citations(result)
+                usage_data = usage_data or self._extract_usage(result)
+                content = self._emit_content(result)
+                if content is not None:
+                    yield {"content": content}
             except (AttributeError, TypeError, IndexError):
-                # Skip malformed responses
                 continue
 
         if citations is not None:
             yield {"metadata": {"citations": citations}}
-
-        # Yield usage data if available - simplified
         if usage_data is not None:
-            # Simple normalization - just extract basic fields
-            try:
-                normalized_usage = {
-                    "prompt_tokens": getattr(usage_data, "prompt_tokens", 0),
-                    "completion_tokens": getattr(usage_data, "completion_tokens", 0),
-                    "total_tokens": getattr(usage_data, "total_tokens", 0),
-                }
-                yield {"usage": normalized_usage}
-            except Exception:
-                # If we can't extract, just provide zeros
-                yield {
-                    "usage": {
-                        "prompt_tokens": 0,
-                        "completion_tokens": 0,
-                        "total_tokens": 0,
-                    }
-                }
+            yield {"usage": self._normalize_usage(usage_data)}
+
+    def _extract_citations(self, result) -> Optional[Any]:
+        if isinstance(result, dict):
+            return result.get("citations", None)
+        if hasattr(result, "get"):
+            return result.get("citations", None)
+        return None
+
+    def _extract_usage(self, result) -> Optional[Any]:
+        if isinstance(result, dict) and self._is_token_usage_result(result):
+            return result.get("usage")
+        if not isinstance(result, dict) and hasattr(result, "usage") and getattr(result, "usage", None):
+            return getattr(result, "usage")
+        return None
+
+    def _emit_content(self, result) -> Optional[str]:
+        if hasattr(result, "choices") and getattr(result, "choices", None):
+            choices = getattr(result, "choices")
+            if choices and len(choices) > 0 and hasattr(choices[0], "delta"):
+                delta = getattr(choices[0], "delta")
+                if hasattr(delta, "content") and getattr(delta, "content") is not None:
+                    return getattr(delta, "content")
+        return None
+
+    def _normalize_usage(self, usage_data) -> dict:
+        try:
+            return {
+                "prompt_tokens": getattr(usage_data, "prompt_tokens", 0),
+                "completion_tokens": getattr(usage_data, "completion_tokens", 0),
+                "total_tokens": getattr(usage_data, "total_tokens", 0),
+            }
+        except Exception:
+            return {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
 
     def _is_token_usage_result(self, result):
         """Check if a result contains token usage data, not just any content containing 'usage'"""
