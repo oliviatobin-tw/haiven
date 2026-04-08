@@ -229,10 +229,10 @@ export default function ApiKeys({ featureToggleConfig = {} }) {
   // Show disabled message if feature is not enabled
   if (!isApiKeyAuthEnabled) {
     return (
-      <div style={{ padding: "24px", maxWidth: "1200px", margin: "0 auto" }}>
-        <div style={{ marginBottom: "24px" }}>
+      <div className="p-6 max-w-[1200px] mx-auto">
+        <div className="mb-6">
           <Title level={2}>
-            <RiKeyLine style={{ marginRight: "8px" }} />
+            <RiKeyLine className="mr-2" />
             API Key Management
           </Title>
           <Alert
@@ -240,7 +240,7 @@ export default function ApiKeys({ featureToggleConfig = {} }) {
             description="API key authentication is currently disabled. This feature is not available in this environment."
             type="info"
             showIcon
-            style={{ marginBottom: "16px" }}
+            className="mb-4"
           />
         </div>
       </div>
@@ -248,10 +248,10 @@ export default function ApiKeys({ featureToggleConfig = {} }) {
   }
 
   return (
-    <div style={{ padding: "24px", maxWidth: "1200px", margin: "0 auto" }}>
-      <div style={{ marginBottom: "24px" }}>
+    <div className="p-6 max-w-[1200px] mx-auto">
+      <div className="mb-6">
         <Title level={2}>
-          <RiKeyLine style={{ marginRight: "8px" }} />
+          <RiKeyLine className="mr-2" />
           API Key Management
         </Title>
         <Paragraph>
@@ -264,27 +264,27 @@ export default function ApiKeys({ featureToggleConfig = {} }) {
 
       {/* Usage Statistics */}
       {usage && (
-        <Card style={{ marginBottom: "24px" }}>
+        <Card className="mb-6">
           <Title level={4}>Usage Statistics</Title>
           <Space size="large">
             <div>
               <Text type="secondary">Total API Keys</Text>
               <br />
-              <Text style={{ fontSize: "24px", fontWeight: "bold" }}>
+              <Text className="text-2xl font-bold">
                 {usage.total_keys}
               </Text>
             </div>
             <div>
               <Text type="secondary">Total Usage</Text>
               <br />
-              <Text style={{ fontSize: "24px", fontWeight: "bold" }}>
+              <Text className="text-2xl font-bold">
                 {usage.total_usage}
               </Text>
             </div>
             <div>
               <Text type="secondary">Last Used</Text>
               <br />
-              <Text style={{ fontSize: "16px" }}>
+              <Text className="text-base">
                 {formatDateTime(usage.most_recent_usage)}
               </Text>
             </div>
@@ -293,15 +293,8 @@ export default function ApiKeys({ featureToggleConfig = {} }) {
       )}
 
       {/* Action Bar */}
-      <div
-        style={{
-          marginBottom: "24px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <Title level={4} style={{ margin: 0 }}>
+      <div className="mb-6 flex justify-between items-center">
+        <Title level={4} className="!m-0">
           Your API Keys
         </Title>
         <Button
@@ -323,16 +316,12 @@ export default function ApiKeys({ featureToggleConfig = {} }) {
           pagination={false}
           locale={{
             emptyText: (
-              <div style={{ textAlign: "center", padding: "48px" }}>
+              <div className="text-center p-12">
                 <RiKeyLine
-                  style={{
-                    fontSize: "48px",
-                    color: "#d9d9d9",
-                    marginBottom: "16px",
-                  }}
+                  className="text-[48px] text-[#d9d9d9] mb-4"
                 />
                 <div>No API keys found</div>
-                <div style={{ marginTop: "8px" }}>
+                <div className="mt-2">
                   <Button
                     type="primary"
                     onClick={() => setGenerateModalVisible(true)}
@@ -365,7 +354,7 @@ export default function ApiKeys({ featureToggleConfig = {} }) {
             description={generateError}
             type="error"
             showIcon
-            style={{ marginBottom: 16 }}
+            className="mb-4"
           />
         )}
         <Form form={form} layout="vertical" onFinish={handleGenerateKey}>
@@ -386,7 +375,7 @@ export default function ApiKeys({ featureToggleConfig = {} }) {
               <span>
                 Expiry (days)
                 <Tooltip title="API keys can be valid for 1 to 30 days. Default is 30.">
-                  <RiInformationLine style={{ marginLeft: 6 }} />
+                  <RiInformationLine className="ml-1.5" />
                 </Tooltip>
               </span>
             }
@@ -408,7 +397,7 @@ export default function ApiKeys({ featureToggleConfig = {} }) {
                 if (isNaN(val)) val = 30;
                 setExpiryDays(val);
               }}
-              style={{ width: 120 }}
+              className="w-[120px]"
             />
           </Form.Item>
 
@@ -417,7 +406,7 @@ export default function ApiKeys({ featureToggleConfig = {} }) {
             description="API keys are valid for 24 hours from the time of generation for security purposes."
             type="info"
             showIcon
-            style={{ marginBottom: "16px" }}
+            className="mb-4"
           />
 
           <Alert
@@ -425,10 +414,10 @@ export default function ApiKeys({ featureToggleConfig = {} }) {
             description="The API key will be shown only once after generation. Make sure to copy and store it securely."
             type="warning"
             showIcon
-            style={{ marginBottom: "16px" }}
+            className="mb-4"
           />
 
-          <Form.Item style={{ marginBottom: 0 }}>
+          <Form.Item className="!mb-0">
             <Space>
               <Button type="primary" htmlType="submit" icon={<RiKeyLine />}>
                 Generate API Key
@@ -477,10 +466,10 @@ export default function ApiKeys({ featureToggleConfig = {} }) {
               description="This is the only time you'll be able to view this API key. Make sure to copy it to a secure location."
               type="error"
               showIcon
-              style={{ marginBottom: "16px" }}
+              className="mb-4"
             />
 
-            <Space direction="vertical" style={{ width: "100%" }}>
+            <Space direction="vertical" className="w-full">
               <div>
                 <Text strong>Name:</Text> {generatedKey.name}
               </div>
@@ -492,23 +481,23 @@ export default function ApiKeys({ featureToggleConfig = {} }) {
 
               <div>
                 <Text strong>API Key:</Text>
-                <div style={{ marginTop: "8px" }}>
+                <div className="mt-2">
                   <Input.Group compact>
                     <Input
                       value={generatedKey.api_key}
                       readOnly
                       type={keyVisible ? "text" : "password"}
-                      style={{ width: "calc(100% - 80px)" }}
+                      className="w-[calc(100%-80px)]"
                     />
                     <Button
                       icon={keyVisible ? <RiEyeOffLine /> : <RiEyeLine />}
                       onClick={() => setKeyVisible(!keyVisible)}
-                      style={{ width: "40px" }}
+                      className="w-10"
                     />
                     <Button
                       icon={<RiFileCopyLine />}
                       onClick={() => copyToClipboard(generatedKey.api_key)}
-                      style={{ width: "40px" }}
+                      className="w-10"
                     />
                   </Input.Group>
                 </div>

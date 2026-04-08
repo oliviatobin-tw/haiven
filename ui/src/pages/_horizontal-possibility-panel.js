@@ -12,10 +12,9 @@ const HorizontalPossibilityPanel = ({
       <div className="suggestions-title">Suggestions:</div>
       <Flex
         marginBottom="1em"
-        style={{ width: "100%" }}
-        className="suggestions-list"
+        className="suggestions-list w-full"
       >
-        <Flex align="flex-start" gap="small" style={{ width: "100%" }}>
+        <Flex align="flex-start" gap="small" className="w-full">
           {scenarioQueries.map((text, i) => (
             <Button
               disabled={disable}

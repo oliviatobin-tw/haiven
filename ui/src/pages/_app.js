@@ -139,22 +139,11 @@ export default function App({
             alt="haiven"
           />
         </div>
-        <Layout
-          style={{ height: "100vh", display: "flex", flexDirection: "column" }}
-        >
-          <Layout.Header
-            style={{
-              position: "fixed",
-              height: "65px",
-              padding: 0,
-              top: 0,
-              zIndex: 20,
-              width: "100%",
-            }}
-          >
+        <Layout className="h-screen flex flex-col">
+          <Layout.Header className="!fixed !h-[65px] !p-0 !top-0 z-20 !w-full">
             <Header featureToggleConfig={featureToggleConfig} />
           </Layout.Header>
-          <Layout style={{ marginTop: "64px", flex: 1, overflow: "hidden" }}>
+          <Layout className="mt-16 flex-1 overflow-hidden">
             <Layout.Sider
               theme="light"
               collapsible
@@ -169,7 +158,7 @@ export default function App({
                 featureToggleConfig={featureToggleConfig}
               />
             </Layout.Sider>
-            <Layout.Content style={{ overflow: "auto", background: "white" }}>
+            <Layout.Content className="overflow-auto !bg-white">
               <Component
                 {...pageProps}
                 prompts={prompts}

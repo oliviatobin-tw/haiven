@@ -63,7 +63,7 @@ const DisclaimerPopup = ({ disclaimerConfig, showBeforeLogin = false }) => {
       centered
       className="disclaimer-popup"
     >
-      <div style={{ overflowY: "auto", maxHeight: "100%" }}>
+      <div className="overflow-y-auto max-h-full">
         <ReactMarkdown>{disclaimerConfig.message}</ReactMarkdown>
       </div>
     </Modal>

@@ -86,10 +86,7 @@ const MermaidDiagram = ({ chart, config = {} }) => {
     return (
       <div className="mermaid-diagram-container">
         <div
-          className="mermaid-diagram error"
-          style={{
-            padding: "1rem",
-          }}
+          className="mermaid-diagram error p-4"
         >
           {errorMessage}
         </div>
@@ -111,10 +108,9 @@ const MermaidDiagram = ({ chart, config = {} }) => {
         <>
           <div
             id={uniqueId}
-            className="mermaid-diagram"
+            className="mermaid-diagram cursor-pointer"
             dangerouslySetInnerHTML={{ __html: svgContent }}
             onClick={openModal}
-            style={{ cursor: "pointer" }}
             title="Click to enlarge diagram"
           />
           <Modal
@@ -122,9 +118,8 @@ const MermaidDiagram = ({ chart, config = {} }) => {
             onCancel={closeModal}
             footer={null}
             width="90%"
-            style={{ top: 20, maxWidth: "90vw" }}
+            className="mermaid-diagram-modal !top-5 max-w-[90vw]"
             centered
-            className="mermaid-diagram-modal"
           >
             <ZoomableDiagram svgContent={svgContent} />
           </Modal>

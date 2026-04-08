@@ -166,8 +166,7 @@ const Pinboard = ({ isModalVisible, onClose }) => {
             className={`pinboard-card ${content.isUserDefined ? "user-defined" : ""}`}
             actions={[
               <div
-                className="pinboard-card-action-items"
-                style={{ backgroundColor: "#f9f9f9" }}
+                className="pinboard-card-action-items bg-[#f9f9f9]"
               >
                 <div className="card-action">
                   <ClockIcon size={16} className="clock-icon" />
@@ -179,7 +178,7 @@ const Pinboard = ({ isModalVisible, onClose }) => {
                     onClick={() => deleteFunction(content)}
                     data-testid="delete"
                   >
-                    <RiDeleteBinLine style={{ fontSize: "large" }} />
+                    <RiDeleteBinLine className="text-lg" />
                   </Button>
                   <Button
                     type="link"
@@ -187,7 +186,7 @@ const Pinboard = ({ isModalVisible, onClose }) => {
                     data-testid="copy"
                   >
                     <RiCheckboxMultipleBlankFill
-                      style={{ fontSize: "large" }}
+                      className="text-lg"
                     />
                   </Button>
                 </div>

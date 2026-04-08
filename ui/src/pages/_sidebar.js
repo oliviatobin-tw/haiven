@@ -71,12 +71,7 @@ const Sidebar = ({ prompts, featureToggleConfig }) => {
               >
                 {prompt.grounded && (
                   <RiGlobalLine
-                    style={{
-                      marginTop: "-2px",
-                      marginRight: "4px",
-                      fontSize: "0.8rem",
-                      verticalAlign: "middle",
-                    }}
+                    className="-mt-[2px] mr-1 text-[0.8rem] align-middle"
                   />
                 )}
                 {prompt.title}

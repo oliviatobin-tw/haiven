@@ -97,8 +97,8 @@ export const DynamicDataRenderer = ({
         if (value === null || value === undefined) return null;
 
         return (
-          <List.Item style={{ padding: "4px 0" }}>
-            <div style={{ width: "100%" }}>
+          <List.Item className="py-1">
+            <div className="w-full">
               {!skipTitles && <Text strong>{toReadableText(key)}:</Text>}
               {renderValue(value, key)}
             </div>
@@ -129,7 +129,7 @@ export const renderValue = (value, parentKey) => {
               <Card
                 size="small"
                 title={item.name || item.title || `Item ${index + 1}`}
-                style={{ marginBottom: "8px" }}
+                className="mb-2"
               >
                 <DynamicDataRenderer
                   data={item}
@@ -143,7 +143,7 @@ export const renderValue = (value, parentKey) => {
     } else {
       // Array of primitives
       return (
-        <ul style={{ margin: "0 0 0 20px", paddingLeft: 0 }}>
+        <ul className="m-0 ml-5 pl-0">
           {value.map((item, index) => (
             <li key={index}>{item || "-"}</li>
           ))}

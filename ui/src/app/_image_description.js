@@ -109,12 +109,8 @@ const DescribeImage = ({ onImageDescriptionChange, imageDescription }) => {
     <div className="upload-image-menu">
       <Upload {...uploadProps}>
         <Button
-          className="upload-button"
+          className="upload-button !bg-[#edf1f3] !text-[#666666ff]"
           icon={<RiImageAddLine />}
-          style={{
-            backgroundColor: "#edf1f3",
-            color: "#666666ff",
-          }}
         >
           <div className="upload-placeholder">
             Drop your image here, or <span className="upload-text">upload</span>

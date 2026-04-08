@@ -8,14 +8,14 @@ const Citations = ({ citations }) => {
 
   return (
     <div className="citations-section">
-      <Typography.Title level={5} style={{ marginTop: "0" }}>
+      <Typography.Title level={5} className="!mt-0">
         Sources
       </Typography.Title>
       <List
         size="small"
         itemLayout="horizontal"
         dataSource={citations}
-        style={{ fontSize: "12px" }}
+        className="text-xs"
         renderItem={(citation) => {
           // Handle both string URLs and object citations
           const url = typeof citation === "string" ? citation : citation.url;
@@ -23,20 +23,14 @@ const Citations = ({ citations }) => {
           if (!url) return null;
 
           return (
-            <List.Item style={{ padding: "2px 0" }}>
-              <ul
-                style={{
-                  listStyleType: "disc",
-                  margin: 0,
-                  paddingLeft: "20px",
-                }}
-              >
+            <List.Item className="py-[2px]">
+              <ul className="list-disc m-0 pl-5">
                 <li>
                   <a
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ fontSize: "12px", lineHeight: "1.2" }}
+                    className="text-xs leading-[1.2]"
                   >
                     {url}
                   </a>

@@ -187,7 +187,7 @@ export default function CompanyCanvas({
     }
 
     return (
-      <div className="search-container" style={{ marginBottom: "20px" }}>
+      <div className="search-container mb-5">
         <Form
           onFinish={async (value) => {
             await handleSearch(value.companyName);
@@ -195,22 +195,21 @@ export default function CompanyCanvas({
           }}
           form={form}
           initialValues={{ companyName: "" }}
-          className="company-search-form"
-          style={{ display: "flex", maxWidth: "450px" }}
+          className="company-search-form flex max-w-[450px]"
         >
           <Form.Item
             name="companyName"
             rules={[{ required: true, message: "Please enter a company name" }]}
-            style={{ marginBottom: 0, marginRight: "10px", flex: 1 }}
+            className="!mb-0 mr-[10px] flex-1"
           >
             <Input
               placeholder="Enter company name"
               disabled={loading}
               onKeyDown={handleKeyDown}
-              style={{ width: "100%", maxWidth: "300px" }}
+              className="w-full max-w-[300px]"
             />
           </Form.Item>
-          <Form.Item style={{ marginBottom: 0 }}>
+          <Form.Item className="!mb-0">
             {!loading && (
               <Button htmlType="submit" icon={<RiSendPlane2Line />}>
                 Research
@@ -257,14 +256,14 @@ export default function CompanyCanvas({
 
     return (
       <div className="citations-section">
-        <Typography.Title level={5} style={{ marginTop: "0" }}>
+        <Typography.Title level={5} className="!mt-0">
           Sources
         </Typography.Title>
         <List
           size="small"
           itemLayout="horizontal"
           dataSource={citations}
-          style={{ fontSize: "12px" }}
+          className="text-xs"
           renderItem={(citation) => {
             // Handle both string URLs and object citations
             const url = typeof citation === "string" ? citation : citation.url;
@@ -272,20 +271,14 @@ export default function CompanyCanvas({
             if (!url) return null;
 
             return (
-              <List.Item style={{ padding: "2px 0" }}>
-                <ul
-                  style={{
-                    listStyleType: "disc",
-                    margin: 0,
-                    paddingLeft: "20px",
-                  }}
-                >
+              <List.Item className="py-[2px]">
+                <ul className="list-disc m-0 pl-5">
                   <li>
                     <a
                       href={url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{ fontSize: "12px", lineHeight: "1.2" }}
+                      className="text-xs leading-[1.2]"
                     >
                       {url}
                     </a>
@@ -317,10 +310,7 @@ export default function CompanyCanvas({
         {inputAreaRender()}
 
         {error && (
-          <div
-            className="error-container"
-            style={{ color: "red", margin: "20px 0" }}
-          >
+          <div className="error-container text-red-500 my-5">
             {error}
           </div>
         )}

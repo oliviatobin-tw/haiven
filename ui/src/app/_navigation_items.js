@@ -33,18 +33,14 @@ export const initialiseMenuCategoriesForSidebar = (isThoughtworksInstance) => {
     categories["client-research"] = {
       key: "client-research",
       label: "Client research",
-      icon: <RiGlobalLine style={{ fontSize: "large" }} />,
+      icon: <RiGlobalLine className="text-lg" />,
       children: [
         {
           key: "company-research",
           label: <Link href="/company-research">Company overview</Link>,
           icon: (
             <RiGlobalLine
-              style={{
-                marginTop: "-2px",
-                fontSize: "0.8rem",
-                verticalAlign: "middle",
-              }}
+              className="-mt-[2px] text-[0.8rem] align-middle"
             />
           ),
         },
@@ -57,11 +53,7 @@ export const initialiseMenuCategoriesForSidebar = (isThoughtworksInstance) => {
           ),
           icon: (
             <RiGlobalLine
-              style={{
-                marginTop: "-2px",
-                fontSize: "0.8rem",
-                verticalAlign: "middle",
-              }}
+              className="-mt-[2px] text-[0.8rem] align-middle"
             />
           ),
         },
@@ -70,7 +62,7 @@ export const initialiseMenuCategoriesForSidebar = (isThoughtworksInstance) => {
     categories.deliveryManagement = {
       key: "deliveryManagement",
       label: "Delivery",
-      icon: <RiDashboardHorizontalLine style={{ fontSize: "large" }} />,
+      icon: <RiDashboardHorizontalLine className="text-lg" />,
       children: [],
     };
   };
@@ -85,13 +77,13 @@ export const initialiseMenuCategoriesForSidebar = (isThoughtworksInstance) => {
     categories.research = {
       key: "research",
       label: "Research",
-      icon: <RiBook2Line style={{ fontSize: "large" }} />,
+      icon: <RiBook2Line className="text-lg" />,
       children: [],
     };
     categories.ideate = {
       key: "ideate",
       label: "Ideate",
-      icon: <RiLightbulbLine style={{ fontSize: "large" }} />,
+      icon: <RiLightbulbLine className="text-lg" />,
       children: [
         {
           key: "creative-matrix",
@@ -106,31 +98,31 @@ export const initialiseMenuCategoriesForSidebar = (isThoughtworksInstance) => {
     categories.analysis = {
       key: "analyse",
       label: "Analyse",
-      icon: <RiBookReadLine style={{ fontSize: "large" }} />,
+      icon: <RiBookReadLine className="text-lg" />,
       children: [],
     };
     categories.coding = {
       key: "coding",
       label: "Coding",
-      icon: <RiCodeBoxLine style={{ fontSize: "large" }} />,
+      icon: <RiCodeBoxLine className="text-lg" />,
       children: [],
     };
     categories.testing = {
       key: "testing",
       label: "Testing",
-      icon: <RiFlaskLine style={{ fontSize: "large" }} />,
+      icon: <RiFlaskLine className="text-lg" />,
       children: [],
     };
     categories.architecture = {
       key: "architecture",
       label: "Architecture",
-      icon: <RiCompasses2Line style={{ fontSize: "large" }} />,
+      icon: <RiCompasses2Line className="text-lg" />,
       children: [],
     };
     categories.other = {
       key: "other",
       label: "Other",
-      icon: <RiChat2Line style={{ fontSize: "large" }} />,
+      icon: <RiChat2Line className="text-lg" />,
       children: [],
     };
   };
@@ -139,12 +131,12 @@ export const initialiseMenuCategoriesForSidebar = (isThoughtworksInstance) => {
     dashboard: {
       key: "dashboard",
       label: <Link href="/">Dashboard</Link>,
-      icon: <RiDashboardHorizontalLine style={{ fontSize: "large" }} />,
+      icon: <RiDashboardHorizontalLine className="text-lg" />,
     },
     knowledgeChat: {
       key: "knowledgeChat",
       label: <Link href="/knowledge-chat">Chat with Haiven</Link>,
-      icon: <RiChatQuoteLine style={{ fontSize: "large" }} />,
+      icon: <RiChatQuoteLine className="text-lg" />,
     },
   };
 

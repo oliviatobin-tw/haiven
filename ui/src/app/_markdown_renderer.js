@@ -19,22 +19,14 @@ const MarkdownRenderer = ({
         // This is a mermaid diagram, render it with our MermaidDiagram component
         const diagramText = String(children).replace(/\n$/, "");
         return (
-          <div className="mermaid-wrapper" style={{ margin: "1rem 0" }}>
+          <div className="mermaid-wrapper my-4">
             <MermaidDiagram chart={diagramText} config={mermaidConfig} />
           </div>
         );
       } catch (error) {
         console.error("Error processing Mermaid diagram:", error);
         return (
-          <div
-            className="mermaid-error"
-            style={{
-              color: "red",
-              padding: "1rem",
-              border: "1px solid red",
-              borderRadius: "4px",
-            }}
-          >
+          <div className="mermaid-error text-red-500 p-4 border border-red-500 rounded-[4px]">
             Error rendering Mermaid diagram: {error.message}
           </div>
         );
@@ -43,14 +35,7 @@ const MarkdownRenderer = ({
 
     // For all other code blocks, render as normal
     return (
-      <pre
-        style={{
-          backgroundColor: "#f5f5f5",
-          padding: "1rem",
-          borderRadius: "4px",
-          overflow: "auto",
-        }}
-      >
+      <pre className="bg-[#f5f5f5] p-4 rounded-[4px] overflow-auto">
         <code className={className} {...props}>
           {children}
         </code>

@@ -72,34 +72,27 @@ classDiagram
   );
 
   return (
-    <div style={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}>
+    <div className="p-5 max-w-[1200px] mx-auto">
       <Title level={2}>Test Page</Title>
       <Text>This is a page to test our Markdown rendering component</Text>
 
       <Divider />
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+      <div className="flex flex-col gap-5">
         <Card title="Markdown Editor">
-          <Space direction="vertical" style={{ width: "100%" }}>
+          <Space direction="vertical" className="w-full">
             <TextArea
               rows={12}
               value={markdownText}
               onChange={(e) => setMarkdownText(e.target.value)}
               placeholder="Enter markdown with Mermaid diagrams here..."
-              style={{ fontFamily: "monospace" }}
+              className="font-mono"
             />
           </Space>
         </Card>
 
         <Card title="Rendered Output">
-          <div
-            style={{
-              padding: "20px",
-              backgroundColor: "#fff",
-              borderRadius: "5px",
-              overflow: "auto",
-            }}
-          >
+          <div className="p-5 bg-white rounded-[5px] overflow-auto">
             <MarkdownRenderer
               content={markdownText}
               mermaidConfig={{ theme: "default" }}
@@ -122,13 +115,7 @@ classDiagram
             a code block marked with "mermaid" as the language:
           </Text>
 
-          <pre
-            style={{
-              background: "#f0f0f0",
-              padding: "10px",
-              borderRadius: "5px",
-            }}
-          >
+          <pre className="bg-[#f0f0f0] p-[10px] rounded-[5px]">
             {`\`\`\`mermaid
 graph TD
     A[Start] --> B[Process]

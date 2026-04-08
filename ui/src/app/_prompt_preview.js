@@ -172,19 +172,13 @@ export default function PromptPreview({
                 disabled={onEditMode}
               >
                 <RiEdit2Line
-                  style={{
-                    fontSize: "large",
-                  }}
+                  className="text-lg"
                 />{" "}
                 EDIT
               </Button>
             )}
             <Button className="copy-action-link" onClick={handleCopy}>
-              <RiClipboardLine
-                style={{
-                  fontSize: "large",
-                }}
-              />{" "}
+              <RiClipboardLine className="text-lg" />{" "}
               COPY
             </Button>
           </div>

@@ -421,22 +421,17 @@ const CreativeMatrix = ({ models, featureToggleConfig }) => {
                   <tbody>
                     {rows.map((rowValue, rowIndex) => {
                       return (
-                        <tr style={{ height: 50 }}>
-                          <td style={{ textAlign: "center", width: "10%" }}>
+                        <tr className="h-[50px]">
+                          <td className="text-center w-[10%]">
                             <b>{rowValue}</b>
                           </td>
                           {columns.map((columnValue, columnIndex) => {
                             return (
                               <td
-                                style={{
-                                  textAlign: "center",
-                                  border: "1px solid #e1e1e1",
-                                  width: 85 / columns.length + "%",
-                                }}
+                                className="text-center border border-[#e1e1e1]"
+                                style={{ width: `${85 / columns.length}%` }}
                               >
-                                <ul
-                                  style={{ textAlign: "left", paddingLeft: 20 }}
-                                >
+                                <ul className="text-left pl-5">
                                   {getMatrixCellValues(
                                     rowIndex,
                                     columnIndex,
@@ -444,10 +439,7 @@ const CreativeMatrix = ({ models, featureToggleConfig }) => {
                                     return (
                                       <li
                                         key={"" + rowIndex + "-" + columnIndex}
-                                        style={{
-                                          marginBottom: 10,
-                                          cursor: "auto",
-                                        }}
+                                        className="mb-[10px] cursor-auto"
                                       >
                                         <b>{idea.title}:</b> {idea.description}
                                       </li>
