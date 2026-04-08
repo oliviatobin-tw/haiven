@@ -420,7 +420,7 @@ const CardsChat = ({
           <div>
             {followUp.title}
             <br />
-            <span style={{ fontWeight: "normal" }}>
+            <span className="font-normal">
               {followUp.help_prompt_description}
             </span>
           </div>
@@ -723,12 +723,12 @@ const CardsChat = ({
                   tokenUsage={tokenUsage}
                 />
               )}
-              <div style={{ paddingLeft: "2em" }}>
+              <div className="pl-[2em]">
                 <Citations citations={citations} />
               </div>
               {scenarios.length > 0 && followUpCollapseItems.length > 0 && (
                 <div className="follow-up-container">
-                  <div style={{ marginTop: "1em" }}>
+                  <div className="mt-[1em]">
                     <h3>What you can do next</h3>
                     <p>Generate content based on the cards above.</p>
                   </div>

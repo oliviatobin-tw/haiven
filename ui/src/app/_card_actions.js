@@ -79,7 +79,7 @@ export default function CardActions({
             <Button
               type="link"
               onClick={() => onPin()}
-              style={{ paddingRight: "0" }}
+              className="!pr-0"
             >
               <RiPushpinLine fontSize="large" />
             </Button>

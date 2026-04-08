@@ -173,7 +173,7 @@ const EnrichCard = ({
   return (
     <>
       {scenarios.length > 0 && (
-        <div style={{ width: "88%", paddingLeft: "2em" }}>
+        <div className="w-[88%] pl-[2em]">
           <h3>What else do you want to add to the cards?</h3>
           <Disclaimer message="Clicking 'Enrich Cards' will disable the 'Generate More Cards' button." />
           <HorizontalPossibilityPanel
@@ -182,7 +182,7 @@ const EnrichCard = ({
             onClick={submitIterationPrompt}
           />
 
-          <div style={{ display: "flex", gap: "8px" }}>
+          <div className="flex gap-2">
             <Input
               value={iterationPrompt}
               onChange={(e, v) => {
@@ -190,7 +190,7 @@ const EnrichCard = ({
               }}
             />
             <Button
-              style={{ marginBottom: "1px" }}
+              className="mb-[1px]"
               disabled={loading}
               onClick={() => {
                 setEnableGenerateMoreCards(false);

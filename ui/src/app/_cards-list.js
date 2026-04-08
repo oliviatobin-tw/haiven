@@ -94,7 +94,7 @@ const CardsList = ({
                     <Tooltip
                       title="Remove"
                       key="chat"
-                      style={{ float: "right", display: "inline" }}
+                      className="float-right inline"
                     >
                       <Button
                         type="link"
@@ -179,10 +179,7 @@ const CardsList = ({
           })}
           {matrix === true && (
             <div
-              className="scenarios-plot-container"
-              style={{
-                display: displayMode == "plot" ? "block" : "none",
-              }}
+              className={`scenarios-plot-container ${displayMode == "plot" ? "block" : "hidden"}`}
             >
               <ScenariosPlotProbabilityImpact
                 scenarios={scenarios}

@@ -202,7 +202,7 @@ export default function ChatDashboard() {
                     <div className="tab-title">
                       <h3>
                         <RiBookShelfLine
-                          style={{ position: "relative", top: "3px" }}
+                          className="relative top-[3px]"
                         />{" "}
                         Codified Practices
                       </h3>
@@ -274,7 +274,7 @@ export default function ChatDashboard() {
                     <div className="tab-title">
                       <h3>
                         <MdLightbulb
-                          style={{ position: "relative", top: "3px" }}
+                          className="relative top-[3px]"
                         />{" "}
                         Inspirations
                       </h3>
@@ -305,8 +305,7 @@ export default function ChatDashboard() {
                                   hoverable
                                   key={`inspiration-card-${index}`}
                                   title={inspiration.title}
-                                  className="dashboard-tile scenario-card-content"
-                                  style={{ backgroundColor: "#f5f5f5" }}
+                                  className="dashboard-tile scenario-card-content bg-[#f5f5f5]"
                                 >
                                   {inspiration.prompt_template.substring(
                                     0,

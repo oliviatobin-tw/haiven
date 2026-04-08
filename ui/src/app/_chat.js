@@ -250,9 +250,7 @@ const ChatWidget = forwardRef(
     return (
       <>
         <ProChat
-          style={{
-            height: "100%", // this is important for the chat_exploration styling!
-          }}
+          className="h-full" /* this is important for the chat_exploration styling! */
           showTitle
           assistantMeta={{
             avatar: "/boba/shining-fill-white.svg",
@@ -283,7 +281,7 @@ const ChatWidget = forwardRef(
                   className={`chat-message ${props.primary ? "user" : "assistant"}`}
                 >
                   {isError ? (
-                    <p style={{ color: "red" }}>{isError}</p>
+                    <p className="text-red-500">{isError}</p>
                   ) : (
                     <MarkdownRenderer content={props.message} />
                   )}

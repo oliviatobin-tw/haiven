@@ -71,17 +71,13 @@ const Plot = ({ scenarios }) => {
         <tbody>
           <tr key="row 1">
             <td></td>
-            <td style={{ height: 40 }}>low plausibility</td>
-            <td style={{ height: 40 }}>medium plausibility</td>
-            <td style={{ height: 40 }}>high plausibility</td>
+            <td className="h-10">low plausibility</td>
+            <td className="h-10">medium plausibility</td>
+            <td className="h-10">high plausibility</td>
           </tr>
           <tr key="row 2">
             <td
-              style={{
-                writingMode: "vertical-rl",
-                textOrientation: "mixed",
-                width: 40,
-              }}
+              className="[writing-mode:vertical-rl] [text-orientation:mixed] w-10"
             >
               high probability
             </td>
@@ -112,11 +108,7 @@ const Plot = ({ scenarios }) => {
           </tr>
           <tr key="row 3">
             <td
-              style={{
-                writingMode: "vertical-rl",
-                textOrientation: "mixed",
-                width: 40,
-              }}
+              className="[writing-mode:vertical-rl] [text-orientation:mixed] w-10"
             >
               medium probability
             </td>
@@ -147,11 +139,7 @@ const Plot = ({ scenarios }) => {
           </tr>
           <tr key="row 4">
             <td
-              style={{
-                writingMode: "vertical-rl",
-                textOrientation: "mixed",
-                width: 40,
-              }}
+              className="[writing-mode:vertical-rl] [text-orientation:mixed] w-10"
             >
               low probability
             </td>

@@ -6,10 +6,9 @@ const VerticalPossibilityPanel = ({ scenarioQueries = [], onClick }) => {
   return (
     <Flex
       marginBottom="1em"
-      style={{ width: "100%" }}
-      className="suggestions-list"
+      className="suggestions-list w-full"
     >
-      <Flex align="flex-start" gap="small" vertical style={{ width: "100%" }}>
+      <Flex align="flex-start" gap="small" vertical className="w-full">
         <div className="suggestions-title">Suggestions:</div>
         {scenarioQueries.map((text, i) => (
           <Button

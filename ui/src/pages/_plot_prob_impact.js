@@ -50,11 +50,7 @@ const PlotProbabilityImpact = ({ scenarios }) => {
         <tbody>
           <tr key="row 2">
             <td
-              style={{
-                writingMode: "vertical-rl",
-                textOrientation: "mixed",
-                width: 40,
-              }}
+              className="[writing-mode:vertical-rl] [text-orientation:mixed] w-10"
             >
               high probability
             </td>
@@ -85,11 +81,7 @@ const PlotProbabilityImpact = ({ scenarios }) => {
           </tr>
           <tr key="row 3">
             <td
-              style={{
-                writingMode: "vertical-rl",
-                textOrientation: "mixed",
-                width: 40,
-              }}
+              className="[writing-mode:vertical-rl] [text-orientation:mixed] w-10"
             >
               medium probability
             </td>
@@ -120,11 +112,7 @@ const PlotProbabilityImpact = ({ scenarios }) => {
           </tr>
           <tr key="row 4">
             <td
-              style={{
-                writingMode: "vertical-rl",
-                textOrientation: "mixed",
-                width: 40,
-              }}
+              className="[writing-mode:vertical-rl] [text-orientation:mixed] w-10"
             >
               low probability
             </td>
@@ -155,9 +143,9 @@ const PlotProbabilityImpact = ({ scenarios }) => {
           </tr>
           <tr key="row 1">
             <td></td>
-            <td style={{ height: 40 }}>low impact</td>
-            <td style={{ height: 40 }}>medium impact</td>
-            <td style={{ height: 40 }}>high impact</td>
+            <td className="h-10">low impact</td>
+            <td className="h-10">medium impact</td>
+            <td className="h-10">high impact</td>
           </tr>
         </tbody>
       </table>

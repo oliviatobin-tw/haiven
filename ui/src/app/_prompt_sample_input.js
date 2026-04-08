@@ -51,11 +51,7 @@ export default function PromptSampleInput({ sampleInput }) {
             </p>
             <div className="actions">
               <Button className="copy-action-link" onClick={handleCopy}>
-                <RiClipboardLine
-                  style={{
-                    fontSize: "large",
-                  }}
-                />{" "}
+                <RiClipboardLine className="text-lg" />{" "}
                 COPY
               </Button>
             </div>

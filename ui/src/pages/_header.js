@@ -36,15 +36,7 @@ export default function Header({ featureToggleConfig }) {
             <div className="separator"></div>
             <div className="title">Haiven team assistant</div>
           </div>
-          <div
-            className="header-links"
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
+          <div className="header-links flex justify-center items-center">
             <div>
               <span>
                 <Link
@@ -75,7 +67,7 @@ export default function Header({ featureToggleConfig }) {
               <Button
                 type="link"
                 onClick={openPinboard}
-                style={{ color: "white" }}
+                className="!text-white"
               >
                 <RiPushpinLine fontSize="large" />
                 Pinboard
