@@ -27,11 +27,12 @@ def minimal_server_app():
     # Minimal mocks for dependencies
     chat_manager = MagicMock()
     config_service = MagicMock()
-    api_key_auth_service = AsyncMock()
-    # Configure the AsyncMock to return None for authenticate_with_api_key_for_mcp_only
-    api_key_auth_service.authenticate_with_api_key_for_mcp_only.return_value = None
-    # Configure the is_mcp_endpoint method to return False for test paths
+    # Use MagicMock so that sync methods (is_mcp_endpoint) return values directly,
+    # and override async methods with AsyncMock to make them awaitable.
+    api_key_auth_service = MagicMock()
     api_key_auth_service.is_mcp_endpoint.return_value = False
+    api_key_auth_service.authenticate_with_api_key_for_mcp_only = AsyncMock(return_value=None)
+    api_key_auth_service.authenticate_with_api_key_optimized = AsyncMock(return_value=None)
     boba_api = MagicMock()
     server = Server(chat_manager, config_service, api_key_auth_service, boba_api)
     app = FastAPI()
@@ -72,7 +73,6 @@ def minimal_server_app():
     return app
 
 
-@pytest.mark.skip(reason="AsyncMock causes recursion issues with FastAPI serialization")
 def test_auth_middleware_redirects_unauthenticated(minimal_server_app):
     if "AUTH_SWITCHED_OFF" in os.environ:
         del os.environ["AUTH_SWITCHED_OFF"]
@@ -82,7 +82,6 @@ def test_auth_middleware_redirects_unauthenticated(minimal_server_app):
     assert "/login" in response.headers["location"]
 
 
-@pytest.mark.skip(reason="AsyncMock causes recursion issues with FastAPI serialization")
 def test_auth_middleware_allows_authenticated(minimal_server_app):
     os.environ["AUTH_SWITCHED_OFF"] = "true"
     client = TestClient(minimal_server_app)
@@ -95,7 +94,6 @@ def test_auth_middleware_allows_authenticated(minimal_server_app):
 
 
 # --- Session expiry middleware tests ---
-@pytest.mark.skip(reason="AsyncMock causes recursion issues with FastAPI serialization")
 def test_session_not_expired(minimal_server_app):
     os.environ["AUTH_SWITCHED_OFF"] = "true"
     client = TestClient(minimal_server_app)
@@ -108,7 +106,6 @@ def test_session_not_expired(minimal_server_app):
     assert response.json()["user"]["email"] == "test@example.com"
 
 
-@pytest.mark.skip(reason="AsyncMock causes recursion issues with FastAPI serialization")
 def test_session_expired(minimal_server_app):
     os.environ["AUTH_SWITCHED_OFF"] = "true"
     client = TestClient(minimal_server_app)
@@ -122,7 +119,6 @@ def test_session_expired(minimal_server_app):
     assert response.headers["location"] == "/"
 
 
-@pytest.mark.skip(reason="AsyncMock causes recursion issues with FastAPI serialization")
 def test_login_endpoint_redirects(minimal_server_app):
     os.environ["AUTH_SWITCHED_OFF"] = "true"
     client = TestClient(minimal_server_app)

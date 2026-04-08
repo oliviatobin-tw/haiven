@@ -1,0 +1,255 @@
+codebase:
+  name: "haiven"
+  vision: "A pluggable AI team assistant that connects LLMs to domain knowledge via knowledge packs, supporting multi-cloud LLM providers (OpenAI, Azure, AWS Bedrock, Google AI, Ollama)"
+  stack:
+    languages:
+      - name: Python
+        current_version: "3.12"
+        target_version: "3.12"
+      - name: TypeScript
+        current_version: "5.9"
+        target_version: "5.9"
+      - name: JavaScript
+        current_version: "ES2022"
+        target_version: "ES2022"
+    frameworks:
+      - name: FastAPI
+        current_version: "latest"
+        target_version: "latest"
+      - name: Next.js
+        current_version: "16"
+        target_version: "16"
+      - name: React
+        current_version: "19"
+        target_version: "19"
+      - name: Tailwind CSS
+        current_version: "4"
+        target_version: "4"
+      - name: Ant Design
+        current_version: "5"
+        target_version: "5"
+    docs:
+      - name: README.md
+        sections:
+          - intro
+          - quickstart
+          - deployment
+          - knowledge packs
+          - contributing
+      - name: CONTRIBUTING.md
+      - name: docs/architecture.md
+        sections:
+          - deployment architecture
+          - runtime architecture
+      - name: docs/design.md
+        sections:
+          - component design
+          - python components
+          - react components
+      - name: docs/DEVELOPER_GUIDELINES.md
+        sections:
+          - getting started
+          - running the app
+          - running tests
+          - code standards
+          - git workflow
+      - name: docs/knowledge_packs.md
+        sections:
+          - structure
+          - creating a pack
+          - embeddings
+      - name: docs/why.md
+    references:
+      - ".junie/guidelines.md"
+      - "docs/DEVELOPER_GUIDELINES.md"
+
+zones:
+  - name: "app-api"
+    description: "FastAPI endpoint handlers for chat, research, creative features, and key management"
+    technologies: "FastAPI, Python, Starlette, Pydantic"
+    paths:
+      - app/api/**
+    allowed_practices:
+      - separate handler files per feature domain
+      - dependency injection via constructor
+      - type hints on all parameters and return types
+      - Pydantic models for request/response validation
+    forbidden_practices:
+      - directly embedding business logic in endpoint handlers
+      - hardcoded credentials or secrets
+      - passing user input directly to LLM without sanitisation
+    rules:
+      max_file_lines: 300
+      target_test_coverage: 80%
+      okay_to_ignore_rules_when:
+        - "route registration files with repetitive wiring"
+
+  - name: "app-services"
+    description: "Core business logic: LLM integrations, knowledge pack management, embeddings, and prompt handling"
+    technologies: "Python, LangChain, FAISS, OpenAI, AWS Bedrock, Google AI, Azure OpenAI, Ollama"
+    paths:
+      - app/llms/**
+      - app/knowledge/**
+      - app/embeddings/**
+      - app/prompts/**
+    allowed_practices:
+      - constructor dependency injection
+      - type hints for all parameters and return types
+      - abstract base classes for provider-agnostic interfaces
+      - strategy pattern for swappable LLM providers
+      - functions under 20 lines
+    forbidden_practices:
+      - tightly coupling to a specific LLM provider
+      - eval() or exec() on user-controlled input
+      - hardcoded API keys or secrets
+      - mutable global state
+    rules:
+      max_file_lines: 300
+      target_test_coverage: 80%
+      okay_to_ignore_rules_when:
+        - "thin adapter/wrapper files for provider SDKs"
+
+  - name: "app-core"
+    description: "Application entrypoints, auth/OAuth integration, and configuration management"
+    technologies: "Python, FastAPI, Authlib, pydantic, GCP Firestore, Secret Manager"
+    paths:
+      - app/auth/**
+      - app/config/**
+      - app/app.py
+      - app/server.py
+      - app/main.py
+    allowed_practices:
+      - constructor dependency injection
+      - type hints for all parameters and return types
+      - environment-based configuration
+      - OAuth for authentication
+    forbidden_practices:
+      - hardcoded environment-specific values
+      - bypassing authentication in production code paths
+      - storing secrets in code
+    rules:
+      max_file_lines: 300
+      target_test_coverage: 70%
+      okay_to_ignore_rules_when:
+        - "application bootstrap/entrypoint files with imperative wiring"
+
+  - name: "app-tests"
+    description: "Backend pytest unit and integration tests"
+    technologies: "pytest, pytest-mock, pytest-cov, Python"
+    paths:
+      - app/tests/**
+    allowed_practices:
+      - TDD (write test first, red-green-refactor)
+      - pytest fixtures for shared setup
+      - mocking external dependencies
+      - markers for integration vs unit tests
+    forbidden_practices:
+      - skipping tests without explanation
+      - tests that depend on external services without mocking
+      - testing implementation details rather than behaviour
+    rules:
+      max_file_lines: 300
+      target_test_coverage: 0%
+      okay_to_ignore_rules_when:
+        - "tests with large fixture data"
+
+  - name: "ui-components"
+    description: "React/Next.js frontend components, pages, and custom hooks"
+    technologies: "React 19, Next.js 16, TypeScript, Tailwind CSS 4, Ant Design 5, Vitest"
+    paths:
+      - ui/src/app/**
+      - ui/src/pages/**
+      - ui/src/hooks/**
+    allowed_practices:
+      - functional components with hooks
+      - Remix icons exclusively (no other icon libraries)
+      - Tailwind CSS for styling
+      - Ant Design component library
+      - client-only mode (no Next.js server-side rendering features)
+      - "_component_name.js" naming convention for components
+    forbidden_practices:
+      - class-based React components
+      - inline CSS styles
+      - server-side Next.js features (getServerSideProps, server actions, etc.)
+      - JSDoc comments
+      - other icon libraries besides Remix icons
+      - jQuery or legacy DOM manipulation
+    rules:
+      max_file_lines: 300
+      target_test_coverage: 70%
+      okay_to_ignore_rules_when:
+        - "large JSX templates that cannot be meaningfully decomposed"
+
+  - name: "ui-tests"
+    description: "Frontend Vitest unit tests using React Testing Library"
+    technologies: "Vitest, @testing-library/react, jsdom"
+    paths:
+      - ui/src/__tests__/**
+    allowed_practices:
+      - TDD (write test first, red-green-refactor)
+      - testing user-visible behaviour, not implementation details
+      - React Testing Library for component interaction
+    forbidden_practices:
+      - testing implementation details or internal state
+      - snapshot tests as the primary test strategy
+    rules:
+      max_file_lines: 300
+      target_test_coverage: 0%
+      okay_to_ignore_rules_when:
+        - "tests with large fixture/mock data"
+
+  - name: "cli"
+    description: "Standalone CLI tool for generating knowledge packs and indexing documents"
+    technologies: "Python, Typer, Pydantic, LangChain, FAISS"
+    paths:
+      - cli/**
+    allowed_practices:
+      - constructor dependency injection
+      - type hints for all parameters and return types
+      - Typer for CLI interface
+      - Pydantic models for data validation
+      - functions under 20 lines
+    forbidden_practices:
+      - hardcoded file paths or cloud-specific assumptions
+      - direct subprocess calls with shell=True
+    rules:
+      max_file_lines: 300
+      target_test_coverage: 80%
+      okay_to_ignore_rules_when:
+        - "CLI entrypoint files with imperative command wiring"
+
+  - name: "e2e-tests"
+    description: "Playwright end-to-end tests covering full application flows across multiple environments"
+    technologies: "Playwright, TypeScript, Node.js"
+    paths:
+      - tests/**
+    allowed_practices:
+      - page object model for reusable selectors
+      - environment-based configuration (local, demo, prod)
+      - test isolation (clean state per test)
+    forbidden_practices:
+      - hardcoded URLs or credentials
+      - tests that depend on specific test ordering
+    rules:
+      max_file_lines: 300
+      target_test_coverage: 0%
+
+  - name: "devops"
+    description: "CI/CD pipeline, Docker build configuration, and development scripts"
+    technologies: "GitHub Actions, Docker, Kaniko, Poetry, Yarn, Semgrep"
+    paths:
+      - .github/**
+      - Dockerfile
+      - devscripts/**
+    allowed_practices:
+      - multi-stage Docker builds with minimal final images
+      - non-root container users
+      - secrets via GitHub Actions secrets, never hardcoded
+      - Semgrep security scanning
+    forbidden_practices:
+      - hardcoded secrets or credentials in CI config
+      - skipping security scans
+      - force pushing to main
+    rules:
+      max_file_lines: 300
+      target_test_coverage: 0%

@@ -2,12 +2,14 @@
 import unittest
 import json
 import asyncio
+import pytest
 from unittest.mock import MagicMock, patch
 from api.api_basics import HaivenBaseApi
 from llms.model_config import ModelConfig
 from llms.chats import ChatManager, StreamingChat, JSONChat
 
 
+@pytest.mark.integration
 class TestTokenUsageIntegration(unittest.TestCase):
     """
     Integration tests for token usage functionality across different streaming endpoints.
