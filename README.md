@@ -237,3 +237,7 @@ How you deploy the container image is all up to your environment - you could use
 This of course makes you responsible for the usual application security practices like secrets management, TLS, security monitoring and alerting, etc.
 
 For Thoughtworkers: Our demo deployment is an example for deploying Haiven to Google Cloud, ask the Haiven team about access to that code.
+
+## Contributing
+
+Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute to this project.
