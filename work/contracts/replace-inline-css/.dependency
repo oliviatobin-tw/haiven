@@ -1,0 +1,6 @@
+{
+  "depends_on": [],
+  "dependent_by": [
+    "decompose-large-ui-components"
+  ]
+}

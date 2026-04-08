@@ -196,3 +196,48 @@ The application also supports retrieval-augmented generation with a more advance
 You will find a utility CLI in the `[./cli](cli)` folder with more documentation.
 
 The new documents will be accessible to the user in the "Documents" dropdowns in the application.
+
+---
+
+## Embeddings
+
+Embeddings allow Haiven to perform semantic (similarity) search over documents in your knowledge pack. When a user asks a question or uses a prompt that references document context, Haiven searches the embeddings index to find the most relevant passages and injects them into the prompt.
+
+### How it works
+
+1. You pre-process documents using the `haiven-cli` tool, which splits them into chunks and generates vector embeddings using a configured embedding model
+2. The resulting FAISS index files (`.faiss` and `.pkl`) are stored inside your knowledge pack under `contexts/<team>/embeddings/<document_name>.kb/`
+3. At runtime, `KnowledgeBaseDocuments` loads each `.kb/` directory using `EmbeddingsClient` and holds the index in memory
+4. When a user message arrives, `StreamingChat` performs a similarity search against the loaded index and includes the top matching passages as context for the LLM
+
+### Supported embedding providers
+
+Embeddings can be generated using:
+- **OpenAI** — `text-embedding-ada-002` or similar
+- **Azure OpenAI** — configured via `azure_deployment` and `azure_endpoint`
+- **AWS Bedrock** — via `BedrockEmbeddings`
+- **Ollama** — local embedding models
+
+The active embedding model is configured in `app/config.yaml` under the `embeddings` key in `default_models`.
+
+### Knowledge pack folder structure for embeddings
+
+```
+contexts/
+  team_1/
+    embeddings/
+      document_name.kb/        # FAISS index for one document
+        index.faiss
+        index.pkl
+      document_name.md         # Optional metadata/description file
+```
+
+### Generating embeddings
+
+Use the CLI to index a document:
+
+```bash
+haiven-cli index-document --file path/to/document.pdf --output contexts/team_1/embeddings/
+```
+
+See the `cli/` directory for full CLI documentation.

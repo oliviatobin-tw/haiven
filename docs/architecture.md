@@ -80,14 +80,16 @@ graph TB
             AWS[🤖 AWS Bedrock] 
             GOOGLE[🤖 Google AI]
             PERPLEXITY[🤖 Perplexity AI]
+            ANTHROPIC[🤖 Anthropic]
+            OPENAI[🤖 OpenAI]
+            OLLAMA[🤖 Ollama]
             style AZURE fill:#fff3e0
             style AWS fill:#fff3e0
             style GOOGLE fill:#fff3e0
             style PERPLEXITY fill:#fff3e0
-        end
-        
-        subgraph "Analytics"
-            BQ[📈 BigQuery<br/>Usage Analytics]
+            style ANTHROPIC fill:#fff3e0
+            style OPENAI fill:#fff3e0
+            style OLLAMA fill:#fff3e0
         end
     end
     
@@ -105,9 +107,9 @@ graph TB
     CR -->|AI Requests| AWS
     CR -->|AI Requests| GOOGLE
     CR -->|AI Requests| PERPLEXITY
-    
-    %% Analytics
-    CR -->|Usage Metrics| BQ
+    CR -->|AI Requests| ANTHROPIC
+    CR -->|AI Requests| OPENAI
+    CR -->|AI Requests| OLLAMA
     
     %% Styling
     classDef apiKeyFlow fill:#e1f5fe,stroke:#01579b,stroke-width:2px
@@ -115,7 +117,7 @@ graph TB
     classDef core fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px
     
     class SM,FS apiKeyFlow
-    class AZURE,AWS,GOOGLE,PERPLEXITY llmFlow
+    class AZURE,AWS,GOOGLE,PERPLEXITY,ANTHROPIC,OPENAI,OLLAMA llmFlow
     class CR core
 ```
 
