@@ -1,10 +1,19 @@
 # © 2024 Thoughtworks, Inc. | Licensed under the Apache License, Version 2.0  | See LICENSE.md file for permissions.
-from fastapi import Request
+from fastapi import FastAPI, Request
 from api.api_basics import HaivenBaseApi
+from llms.chats import ChatManager
+from llms.model_config import ModelConfig
+from prompts.prompts import PromptList
 
 
 class ApiCreativeMatrix(HaivenBaseApi):
-    def __init__(self, app, chat_session_memory, model_key, prompt_list):
+    def __init__(
+        self,
+        app: FastAPI,
+        chat_session_memory: ChatManager,
+        model_key: ModelConfig,
+        prompt_list: PromptList,
+    ):
         super().__init__(app, chat_session_memory, model_key, prompt_list)
 
         @app.get("/api/creative-matrix")
