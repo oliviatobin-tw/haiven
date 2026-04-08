@@ -22,7 +22,7 @@ class PromptList:
         interaction_type,
         knowledge_base: KnowledgeBaseMarkdown,
         knowledge_manager: KnowledgeManager,
-        variables=[],
+        variables=None,
         root_dir="teams",
     ):
         data_sources = {
@@ -56,7 +56,7 @@ class PromptList:
 
         self.knowledge_base = knowledge_base
         self.knowledge_manager = knowledge_manager
-        self.extra_variables = variables
+        self.extra_variables = variables if variables is not None else []
 
         for prompt in self.prompts:
             if "title" not in prompt.metadata:
@@ -151,10 +151,10 @@ class PromptList:
         self,
         prompt_choice: str,
         user_input: str,
-        additional_vars: dict = {},
+        additional_vars: dict = None,
     ) -> str:
         if prompt_choice is not None:
-            vars = additional_vars
+            vars = {} if additional_vars is None else additional_vars
             vars["user_input"] = user_input
             rendered, template = self.create_and_render_template(
                 prompt_choice,
