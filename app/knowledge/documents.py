@@ -23,8 +23,6 @@ class KnowledgeBaseDocuments:
         _embeddings_provider (Embeddings): The provider used for generating embeddings.
     """
 
-    _document_stores: InMemoryEmbeddingsDB = None
-
     def __init__(
         self,
         config_service: ConfigService,
@@ -36,8 +34,7 @@ class KnowledgeBaseDocuments:
         else:
             self._embeddings_provider = embeddings_provider
 
-        if self._document_stores is None:
-            self._document_stores = InMemoryEmbeddingsDB()
+        self._document_stores = InMemoryEmbeddingsDB()
 
     def load_documents_for_base(self, knowledge_pack_path: str) -> None:
         """

@@ -119,4 +119,5 @@ class DocumentsUtils:
 
     @staticmethod
     def get_search_result_item(document_metadata: dict) -> str:
-        return f"{DocumentsUtils.get_source_title_link(document_metadata)} {f'({DocumentsUtils.get_extra_metadata(document_metadata).strip()})' if DocumentsUtils.get_extra_metadata(document_metadata) else ''}"
+        extra = DocumentsUtils.get_extra_metadata(document_metadata).strip()
+        return f"{DocumentsUtils.get_source_title_link(document_metadata)} {f'({extra})' if extra else ''}"
