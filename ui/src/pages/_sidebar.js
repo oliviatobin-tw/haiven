@@ -8,7 +8,7 @@ import {
   initialiseMenuCategoriesForSidebar,
   THOUGHTWORKS_ONLY_CATEGORIES,
 } from "../app/_navigation_items";
-import { FEATURES } from "../app/feature_toggle";
+import { FEATURES } from "../app/_feature_toggle";
 
 const Sidebar = ({ prompts, featureToggleConfig }) => {
   const pathToKey = {

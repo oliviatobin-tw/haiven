@@ -5,7 +5,7 @@ import DownloadPrompt from "../app/_download_prompt";
 import "@testing-library/jest-dom";
 
 // Mock the fetchPromptContent function
-vi.mock("../app/utils/promptDownloadUtils", () => ({
+vi.mock("../app/utils/_prompt_download_utils", () => ({
   fetchPromptContent: vi.fn(),
 }));
 

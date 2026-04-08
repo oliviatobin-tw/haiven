@@ -14,7 +14,7 @@ import { fetchSSE } from "../app/_fetch_sse";
 import ChatHeader from "./_chat_header";
 import useLoader from "../hooks/useLoader";
 import LLMTokenUsage from "../app/_llm_token_usage";
-import { formattedUsage } from "../app/utils/tokenUtils";
+import { formattedUsage } from "../app/utils/_token_utils";
 import { aggregateTokenUsage } from "../app/utils/_aggregate_token_usage";
 
 const CreativeMatrix = ({ models, featureToggleConfig }) => {

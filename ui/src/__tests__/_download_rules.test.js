@@ -3,10 +3,10 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import {
   generateReadmeContent,
   getFileName,
-} from "../app/utils/rulesDownloadUtils";
+} from "../app/utils/_rules_download_utils";
 
 // Mock the utils
-vi.mock("../app/utils/rulesDownloadUtils", () => ({
+vi.mock("../app/utils/_rules_download_utils", () => ({
   generateReadmeContent: vi.fn(),
   getFileName: vi.fn(),
 }));

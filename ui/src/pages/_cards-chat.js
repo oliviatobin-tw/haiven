@@ -30,7 +30,7 @@ import { scenarioToText } from "../app/_dynamic_data_renderer";
 import EnrichCard from "../app/_enrich_card";
 import Citations from "../pages/_citations";
 import DownloadPrompt from "../app/_download_prompt";
-import { formattedUsage } from "../app/utils/tokenUtils";
+import { formattedUsage } from "../app/utils/_token_utils";
 import { aggregateTokenUsage } from "../app/utils/_aggregate_token_usage";
 import { filterSSEEvents } from "../app/utils/_sse_event_filter";
 

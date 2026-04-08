@@ -6,16 +6,12 @@ import { Button, Input } from "antd";
 import { fetchSSE } from "../app/_fetch_sse";
 import { toast } from "react-toastify";
 import { parse } from "best-effort-json-parser";
-import { formattedUsage } from "../app/utils/tokenUtils";
+import { formattedUsage } from "../app/utils/_token_utils";
 import { aggregateTokenUsage } from "../app/utils/_aggregate_token_usage";
 import { filterSSEEvents } from "../app/utils/_sse_event_filter";
 
-/** ITERATION EXPERIMENT
- * (behind feature toggle, experimental implementation)
- *
- * Switch on with:
- * window.localStorage.setItem("toggles", '{ "cards_iteration": true }')
- * */
+// ITERATION EXPERIMENT (behind feature toggle, experimental implementation)
+// Switch on with: window.localStorage.setItem("toggles", '{ "cards_iteration": true }')
 const EnrichCard = ({
   startLoad,
   abortLoad,

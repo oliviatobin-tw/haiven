@@ -21,7 +21,7 @@ import ChatExploration from "./_chat_exploration";
 import CardsList from "../app/_cards-list";
 import HelpTooltip from "../app/_help_tooltip";
 import LLMTokenUsage from "../app/_llm_token_usage";
-import { formattedUsage } from "../app/utils/tokenUtils";
+import { formattedUsage } from "../app/utils/_token_utils";
 import { aggregateTokenUsage } from "../app/utils/_aggregate_token_usage";
 
 const Home = ({ models, featureToggleConfig }) => {

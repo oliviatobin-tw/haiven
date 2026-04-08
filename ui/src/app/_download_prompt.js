@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { RiDownload2Line } from "react-icons/ri";
 import { Tooltip } from "antd";
-import { fetchPromptContent } from "./utils/promptDownloadUtils";
+import { fetchPromptContent } from "./utils/_prompt_download_utils";
 
 const DownloadPrompt = ({ prompt }) => {
   const handleDownload = async () => {

@@ -16,7 +16,7 @@ import {
   getModels,
   getRules,
 } from "../app/_boba_api";
-import { getFeatureTogglesAsJson } from "../app/feature_toggle";
+import { getFeatureTogglesAsJson } from "../app/_feature_toggle";
 
 export default function App({
   Component,
